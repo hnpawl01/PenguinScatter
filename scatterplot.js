@@ -3,7 +3,7 @@ var penguinPromise = d3.json("classData.json");
 //----------drawingFinalvsHW-------------
 	var drawPlot = function (penguins,screen,xScale,yScale)
 	{
-		console.log(xScale);
+		console.log("drawplot" ,penguins);
 		d3.select("#graph")
 		.selectAll("circle")
 		.data(penguins)
@@ -33,7 +33,7 @@ var penguinPromise = d3.json("classData.json");
 //------------drawHWvsQuiz-------------
 var drawPlot2 = function (penguins,screen,xScale,yScale)
 	{
-		console.log(xScale);
+		console.log("drawplot2" ,penguins);
 		d3.select("#graph")
 		.selectAll("circle")
 		.data(penguins)
@@ -41,11 +41,11 @@ var drawPlot2 = function (penguins,screen,xScale,yScale)
 		.append("circle")
 		.attr("cx",function (penguin)
 			 {
-			return xScale2(getGradeshomework(penguin))
+			return xScale(getGradeshomework(penguin))
 			})
 			.attr("cy",function (penguin)
 			 {
-			return yScale2(getGradesquiz(penguin))
+			return yScale(getGradesquiz(penguin))
 			})
 		
 		.attr("r",2)
@@ -76,10 +76,11 @@ var drawPlot2 = function (penguins,screen,xScale,yScale)
 		
 		var HwvsQuizButton = function (penguins,screen,xScale,yScale)
 		{
-			console.log("hey14")
+			console.log("hwquizbutton",penguins)
 			d3.select("#banner2")
 			.on("click", function()
 			   {
+				console.log("penguinsremove",penguins)
 				d3.selectAll("circle")
 				.remove()
 			drawPlot2(penguins,screen,xScale,yScale)
@@ -92,6 +93,7 @@ var drawPlot2 = function (penguins,screen,xScale,yScale)
 //---------scale---------
 var initgraph = function (penguins)
 {
+	console.log(penguins)
 	var screen = {width:500, height:500}
 	d3.select("#graph")
 	.attr("width", screen.width)
@@ -102,15 +104,10 @@ var initgraph = function (penguins)
 	var yScale = d3.scaleLinear()
 					.domain([0,100])
 					.range([screen.height,0])
-	var xScale2 = d3.scaleLinear()
-					.domain([0,100])
-					.range([0,screen.width])
-	var yScale2 = d3.scaleLinear()
-					.domain([0,100])
-					.range([screen.height,0])
 	drawPlot(penguins,screen,xScale,yScale);
-	drawPlot2(penguins,screen,xScale,yScale);
-		
+	//drawPlot2(penguins,screen,xScale,yScale);
+	FinalvsHwButton(penguins,screen,xScale,yScale)
+	HwvsQuizButton(penguins,screen,xScale,yScale)	
 		
 		
 }
@@ -149,8 +146,8 @@ var successFcn = function(penguins)
 {
 	console.log("penguins",penguins)
 	initgraph(penguins)
-	FinalvsHwButton(penguins)
-	HwvsQuizButton(penguins)
+	//FinalvsHwButton(penguins,screen,xScale,yScale)
+	//HwvsQuizButton(penguins,screen,xScale,yScale)
 	
 }
 var failureFcn = function(error)
